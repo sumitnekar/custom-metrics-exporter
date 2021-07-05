@@ -1,4 +1,4 @@
-package com.library.metrics.exporter.data;
+package com.library.metrics.reporter.data;
 
 public abstract class MetricValue<T> {
 

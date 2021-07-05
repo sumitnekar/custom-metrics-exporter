@@ -1,10 +1,10 @@
-package com.library.metrics.exporter.service;
+package com.library.metrics.reporter.service;
 
-import com.library.metrics.exporter.api.MetricsReporter;
-import com.library.metrics.exporter.data.Label;
-import com.library.metrics.exporter.data.Metric;
-import com.library.metrics.exporter.data.MetricValue;
-import com.library.metrics.exporter.exceptions.MetricsReporterException;
+import com.library.metrics.reporter.api.MetricsReporter;
+import com.library.metrics.reporter.data.Label;
+import com.library.metrics.reporter.data.Metric;
+import com.library.metrics.reporter.data.MetricValue;
+import com.library.metrics.reporter.exceptions.MetricsReporterException;
 
 import java.util.HashMap;
 import java.util.List;

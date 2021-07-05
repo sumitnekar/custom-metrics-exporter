@@ -1,4 +1,4 @@
-package com.library.metrics.exporter;
+package com.library.metrics.reporter;
 
 public class MetricExporterApplication {
 
