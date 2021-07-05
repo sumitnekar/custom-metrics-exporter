@@ -1,12 +1,14 @@
 package com.library.metrics.reporter.data;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Metric {
     String id;
     String name;
     MetricValue<Double> value;
     List<Label> labels;
+
 
     public String getId() {
         return id;
@@ -41,8 +43,8 @@ public class Metric {
     }
 
 
-    public Metric(String id, String name, MetricValue<Double> value, List<Label> labels) {
-        this.id = id;
+    public Metric(String name, MetricValue<Double> value, List<Label> labels) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.value = value;
         this.labels = labels;

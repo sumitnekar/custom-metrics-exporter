@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MetricsReporter {
 
-    public void register(Metric metric);
+    public Metric register(Metric metric);
 
     public Metric update(String name, List<Label> labels, MetricValue<Double> value) throws MetricsReporterException;
 

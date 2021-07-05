@@ -1,6 +1,7 @@
 package com.library.metrics.reporter.service;
 
 import com.library.metrics.reporter.api.MetricsReporter;
+import com.library.metrics.reporter.data.CounterMetricValue;
 import com.library.metrics.reporter.data.Label;
 import com.library.metrics.reporter.data.Metric;
 import com.library.metrics.reporter.data.MetricValue;
@@ -16,9 +17,10 @@ public class MetricsReporterImpl implements MetricsReporter {
     Map<String, Metric> metricStore = new HashMap<>();
 
     @Override
-    public void register(Metric metric) {
+    public Metric register(Metric metric) {
         String key = getMetricStoreKey(metric.getName(), metric.getLabels());
         metricStore.put(key, metric);
+        return metric;
     }
 
     @Override
@@ -26,8 +28,16 @@ public class MetricsReporterImpl implements MetricsReporter {
         String key = getMetricStoreKey(name, labels);
         Metric existingMetric = metricStore.get(key);
         if (key != null) {
-            //update
-            existingMetric.setValue(value);
+
+            if (CounterMetricValue.class.isAssignableFrom(existingMetric.getValue().getClass())) {
+                //update
+                Double existingValue = existingMetric.getValue().getValue();
+                existingMetric.setValue(new CounterMetricValue(existingValue + 1));
+            } else {
+                //update
+                existingMetric.setValue(value);
+            }
+
             metricStore.put(key, existingMetric);
         } else {
             throw new MetricsReporterException("Metric with name:" + name + " Labels:" + labels + " not found");

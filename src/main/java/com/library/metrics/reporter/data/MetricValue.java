@@ -4,6 +4,14 @@ public abstract class MetricValue<T> {
 
     T value;
 
+    public MetricValue() {
+    }
+
+    public MetricValue(T value) {
+        this.value = value;
+    }
+
+
     public T getValue() {
         return value;
     }
@@ -12,9 +20,6 @@ public abstract class MetricValue<T> {
         this.value = value;
     }
 
-    public MetricValue(T value) {
-        this.value = value;
-    }
 
 
 }
