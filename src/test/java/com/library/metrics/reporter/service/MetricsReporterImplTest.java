@@ -16,7 +16,7 @@ public class MetricsReporterImplTest {
 
     @Test
     public void testRegister() {
-        MetricsReporter reporter = new MetricsReporterImpl();
+        MetricsReporter reporter = new MetricsReporterImpl("/metrics");
         List<Label> labels = new ArrayList<>();
         labels.add(new Label("operation", "create"));
         labels.add(new Label("app", "userservice"));
@@ -28,7 +28,7 @@ public class MetricsReporterImplTest {
 
     @Test
     public void testUpdate() throws MetricsReporterException {
-        MetricsReporter reporter = new MetricsReporterImpl();
+        MetricsReporter reporter = new MetricsReporterImpl("/metrics");
         List<Label> labels = new ArrayList<>();
         labels.add(new Label("operation", "create"));
         labels.add(new Label("app", "userservice"));

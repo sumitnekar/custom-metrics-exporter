@@ -11,10 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MetricsReporterImpl implements MetricsReporter {
 
     Map<String, Metric> metricStore = new HashMap<>();
+    PushGateway pushGateway;
+
+    public MetricsReporterImpl(String url) {
+        pushGateway = new PushGateway("/metrics");
+    }
 
     @Override
     public Metric register(Metric metric) {
@@ -48,13 +56,25 @@ public class MetricsReporterImpl implements MetricsReporter {
 
     @Override
     public void exportAll() {
-
-
+        postPeriodically(2, TimeUnit.MINUTES);
     }
 
+
+    //creates scheduled executor and starts writing metrics periodically
+    private void postPeriodically(long delay, TimeUnit timeUnit) {
+        ScheduledExecutorService es = Executors.newScheduledThreadPool(1);
+        es.schedule(new Runnable() {
+            @Override
+            public void run() {
+                pushGateway.pushAll(metricStore.values());
+            }
+        }, delay, timeUnit);
+    }
 
     //Key will be combination of name and hash of labels
     private String getMetricStoreKey(String name, List<Label> labels) {
         return name + "_" + Objects.hash(labels);
     }
+
+
 }
